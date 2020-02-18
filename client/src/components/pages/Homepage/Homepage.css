@@ -1,0 +1,59 @@
+
+body{
+    background-color: chartreuse;
+}
+/* h3{
+    text-align: start;
+} */
+ 
+.Homepage {
+    background-color: cornflowerblue;
+    min-height: 700px;
+    width: 900px;
+    margin: 40px auto;
+    display:grid;
+    grid-template-columns: 60% 40%;
+   
+}
+
+.search-form input {
+    border: o;
+    border-radius: 10px;
+    width: 200px;
+    height: 30px;
+    margin: 10px;
+    padding: 0 20px;
+    color: green
+
+}
+.add-more-search-form {
+    border: 1;
+    margin: 30px;
+    height: 30px;
+    padding: 0 30px;
+    cursor: pointer;
+}
+
+.search-form input::placeholder {
+    color: green;
+}
+.search-form input::focus{
+    outline: none;
+}
+.search-form button {
+    height: 30px;
+    width: 50px;
+    border-radius: 5px;
+    background-color: green;
+    cursor: pointer;
+    font-weight: bolder;
+}
+.save{
+    height: 30px;
+    width: 90px;
+    border-radius: 5px;
+    background-color: green;
+    cursor: pointer;
+    font-weight: bolder;
+
+}

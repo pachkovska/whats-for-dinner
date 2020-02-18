@@ -1,5 +1,11 @@
 .App {
-    background: linear-gradient(to top, #ff00cc, #333399);
+    
+    /* background: linear-gradient(to top, #ff00cc, #333399); */
+    background: linear-gradient(to top, #228B22, #333399);
+    /* background: url('https://cdn.shopify.com/s/files/1/1060/9112/products/96_1024x1024.png?v=1526760250') fixed; */
+    /* background: url('https://uhs.berkeley.edu/sites/default/files/styles/openberkeley_brand_widgets_rectangle/public/sos-nutrition-whatseatingyou.jpg?itok=uqiZ3lPh'); */
+   
+    background-size: auto;
     min-height: 100vh;
     display: grid;
     grid-template-columns: 1fr minmax(auto, 800px) 1fr;

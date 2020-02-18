@@ -7,13 +7,20 @@ class LandingPage extends Component {
     return (
       <div className="LandingPage">
         <header className="LandingPage-header">
-          <p>
-            Kickstart Coding - Frontend React<br />
-            MERN Starter Project
-          </p>
+          <h1>
+            What's For Dinner<br/>
+            
+          </h1>
+          </header>
+          <div className="link">
+          <Link to="/homepage">Home Page</Link>
           <Link to="/blog/">Blog</Link>
-          <Link to="/write/">Write article</Link>
-        </header>
+          <Link to="/write/">Write Article</Link>
+          <Link to="/signinpage/">Login</Link>
+          <Link to="/signuppage/">Signup</Link>
+          </div>
+
+        {/* </header> */}
       </div>
     );
   }

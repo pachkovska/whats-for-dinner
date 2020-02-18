@@ -12,6 +12,47 @@ import Signuppage from'./components/pages/Signuppage/Signuppage.js';
 
 
 class App extends Component {
+
+  state = {
+    data: '',
+    ingridient1: {id: '1', name: ''},
+    ingridient2: {id: '2', name: ''},
+    ingridient3: {id: '3', name: ''},
+    ingridient4: {id: '4', name: ''},
+    ingridient5: {id: '5', name: ''},
+    ingridient6: {id: '6', name: ''},
+  }
+  
+  onIngridientChange = (ev) => {
+    // let {name, value} = ev.target;
+    let value = ev.target.value;
+    this.setState({
+      ingridient1: {id: this.state.ingridient1.id, name: value},
+    });
+  }
+
+  getFoodList = () => {
+    fetch(`https://api.nal.usda.gov/fdc/v1/search?api_key=o5SMCYbasYSA5j3KyCNfq2DxrcMJZiQ1KHmhnnYH&generalSearchInput=${this.state.ingridient1.name}`)
+    // fetch('https://api.nal.usda.gov/fdc/v1/559542?api_key=o5SMCYbasYSA5j3KyCNfq2DxrcMJZiQ1KHmhnnYH')
+    .then(response => response.json())
+    .then(data => {
+        console.log(data)
+        this.setState({
+          ingridient1: {id: data.fdcId, name: this.state.ingridient1.name}, 
+        }, console.log(this.state.ingridient1.name))
+    });
+    
+  }
+
+  foodSearch () {
+    fetch(`https://api.nal.usda.gov/fdc/v1/search?api_key=o5SMCYbasYSA5j3KyCNfq2DxrcMJZiQ1KHmhnnYH&generalSearchInput=chips`)
+    // fetch('https://api.nal.usda.gov/fdc/v1/559542?api_key=o5SMCYbasYSA5j3KyCNfq2DxrcMJZiQ1KHmhnnYH')
+    .then(response => response.json())
+    .then(data => {
+        console.log(data)
+    });
+  }
+
   render() {
     return (
       <div className="App">
@@ -37,6 +78,14 @@ class App extends Component {
             <Route exact path='/signuppage/' component={Signuppage} />
             
           </Switch>
+        </div>
+        <div className="userInput">
+          <input
+              placeholder="Ingridient"
+              value={this.state.ingridient1.name}
+              onChange={this.onIngridientChange}
+              name="test"
+            /><button onclick={this.getFoodList}>Submit</button>
         </div>
 
       </div>

@@ -35,16 +35,13 @@ class App extends Component {
   }
 
   foodSearch (lastSavedIngridient) {
-    // let last = this.state.ingridients[this.state.ingridients.length-1]
     fetch(`https://api.nal.usda.gov/fdc/v1/${lastSavedIngridient}?api_key=o5SMCYbasYSA5j3KyCNfq2DxrcMJZiQ1KHmhnnYH`)
     .then(response => response.json())
     .then(data => {
-        // console.log(data.foodNutrients) //747447
         this.setState({
           nutrientData: [...this.state.nutrientData, {id: lastSavedIngridient, foodNutrients: data.foodNutrients}],
         }, this.clearInputField())
     })
-    // console.log(this.state.nutrientData)
   }
 
   clearInputField() {
@@ -57,7 +54,7 @@ class App extends Component {
     return (
       <div className="App">
         <nav className="App-navigation">
-          <h1 className="App-title">MERN Starter</h1>
+          <h1 className="App-title">DinnerCount</h1>
           <Link to="/">Welcome</Link>
           <Link to="/blog/">Blog</Link>
           <Link to="/write/">Write Article</Link>

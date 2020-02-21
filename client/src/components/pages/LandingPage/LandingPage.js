@@ -12,15 +12,7 @@ class LandingPage extends Component {
             
           </h1>
           </header>
-          <div className="link">
-          <Link to="/homepage">Home Page</Link>
-          <Link to="/blog/">Blog</Link>
-          <Link to="/write/">Write Article</Link>
-          <Link to="/signinpage/">Login</Link>
-          <Link to="/signuppage/">Signup</Link>
-          </div>
-
-        {/* </header> */}
+          {/* <button className="btn btn-dark" onClick={this.props.signOut}>Sign Out</button> */}
       </div>
     );
   }

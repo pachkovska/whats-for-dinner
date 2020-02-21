@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Link, Switch, Route } from 'react-router-dom'
+import { Link, Switch, Route } from 'react-router-dom';
+import Login from './Login';
+import auth0Client from './Auth';
 
 import './App.css';
 
@@ -8,8 +10,6 @@ import Homepage from './components/pages/Homepage/Homepage.js';
 import AccountPage from './components/pages//AccountPage/AccountPage.js';
 import Blog from './components/pages/Blog/Blog.js';
 import WriteArticle from './components/pages/WriteArticle/WriteArticle.js';
-import Signinpage from'./components/pages/Signinpage/Signinpage.js';
-import Signuppage from'./components/pages/Signuppage/Signuppage.js';
 
 
 class App extends Component {
@@ -63,13 +63,26 @@ class App extends Component {
           {/* <h1 className="App-title">What's For Dinner</h1> */}
           <h1 className="App-title">DinnerCount</h1>
           <Link to="/homepage">Home Page</Link>
+
           <Link to="/account">Account</Link>
+          <Link to="/blog/">Blog</Link>
+          <Link to="/write/">Write Article</Link>
+            {/* <Link to={auth0Client.isAuthenticated() ? '/signout/' : '/login/'} component={LandingPage} > Signout  */}
+            <Link to='/login/' component={Login}>Login </Link> 
+            <Link to='/logout/' component={LandingPage} /> 
+          {/* <Link to="/signuppage/">Signup</Link> */}
+
+
         </nav>
 
         <div className="App-mainContent">
           <Switch>
             <Route exact path='/homepage' component={Homepage} />
             <Route exact path='/account' component={AccountPage} />
+            <Route exact path='/blog/' component={Blog} />
+            <Route exact path='/write/' component={WriteArticle} />
+            <Route exact path='/login/' component={Login} /> 
+            <Route exact path='/logout/' component={LandingPage} />
           </Switch>
         </div>
         <div className="userInput">
@@ -79,7 +92,7 @@ class App extends Component {
               onChange={this.onIngridientChange}
             /><button onClick={this.getFoodList}>Submit</button>
         </div>
-
+        <button onClick={auth0Client.signOut}>Sign Out</button>
       </div>
     );
   }

@@ -1,0 +1,41 @@
+
+.WriteArticle input,
+.WriteArticle textarea,
+
+.accountPageContainer{
+display:grid;
+grid-column:  50% 50%;
+grid-row: 25% 25% 25% 25% 
+}
+
+.accountPage-body{
+  grid-row: 1;
+  grid-column: 1;
+
+}
+.accountPage-mealSection{
+  grid-row: 2;
+  grid-column: 1;
+
+}
+
+.accountPage-calCount{
+  display:grid;
+  grid-column:  1r 10px;
+  grid-row: 2;
+  grid-column: 2;
+
+}
+
+.accountPage--recipeInfo{
+  Background: white;
+  margin: 10px;
+  width: 100px;
+  height: 100px;
+}
+
+.accountPage-deleteBtn{
+  grid-row: 2;
+  grid-column: 2;
+}
+

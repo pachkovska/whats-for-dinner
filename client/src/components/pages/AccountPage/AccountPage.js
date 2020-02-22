@@ -25,9 +25,10 @@ class AccountPage extends Component {
       <div className="accountPageContainer">
         <div className= "accountPage-body">
         <h1>Welcome to your Account Page, [username]!</h1>
-        <p> See below for your saved meals. You can also delete them from this page as well.</p>
+        <p> See below for your saved recepies. You can also delete them from this page as well.</p>
         </div>
-        <div className= "accountPage-mealSection">
+        <div className= "accountPage-recipeSection">
+          <div className= "accountPage--recipeNameSection">
           <div>Saved Recipe</div>
         {
               this.state.recipes.map((recipe, index) => ( 
@@ -37,7 +38,7 @@ class AccountPage extends Component {
               ))
             } 
         </div>
-        <div className= "accountPage-calCount">
+        <div className= "accountPage--calCountSection">
         <div>Total Calories</div>
         {
               this.state.recipes.map((recipe, index) => ( 
@@ -46,12 +47,14 @@ class AccountPage extends Component {
                 </div>
               ))
             } 
+        </div>
+        <div className="accountPage--deleteButtonSection">
+        <div></div>
         
-        <div className="accountPage-deleteBtn">
       {
         this.state.recipes.map((recipe, index) => ( 
           <div>
-              <button onClick={() => this.onDelete(index)}>
+              <button className="accountPage-deleteBtn" onClick={() => this.onDelete(index)}>
                   Remove
               </button>
           </div>
@@ -60,6 +63,7 @@ class AccountPage extends Component {
         </div>
         </div>
         </div>
+        
     );
   }
 }

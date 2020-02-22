@@ -4,38 +4,56 @@
 
 .accountPageContainer{
 display:grid;
-grid-column:  50% 50%;
-grid-row: 25% 25% 25% 25% 
+grid-template-columns: 1fr;
+grid-template-rows: 1fr 1fr;
+justify-items: center;
+height: 100%;
 }
 
 .accountPage-body{
   grid-row: 1;
-  grid-column: 1;
+  margin-bottom: 50px;
 
 }
-.accountPage-mealSection{
+.accountPage-recipeSection{
   grid-row: 2;
   grid-column: 1;
-
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
-.accountPage-calCount{
-  display:grid;
-  grid-column:  1r 10px;
+.accountPage--recipeNameSection{
+  grid-row: 2;
+  grid-column: 1;
+ 
+  
+}
+.accountPage--calCountSection{
   grid-row: 2;
   grid-column: 2;
+ 
+}
 
+.accountPage--deleteButtonSection{
+  Display:grid;
+  grid-row: 2;
+  grid-column: 3;
+  justify-items: ;
+  
 }
 
 .accountPage--recipeInfo{
   Background: white;
   margin: 10px;
-  width: 100px;
-  height: 100px;
+  width: 50%;
+  height: 20%;
 }
 
 .accountPage-deleteBtn{
   grid-row: 2;
   grid-column: 2;
+
+  
+  
 }
 

@@ -18,42 +18,61 @@ height: 100%;
 .accountPage-recipeSection{
   grid-row: 2;
   grid-column: 1;
-  display: grid;
+  display: flex;
   grid-template-columns: 1fr 1fr 1fr;
+  background-color: tomato;
+  align-items: baseline;
+  justify-items: center;
+  justify-content: space-around;
 }
 
 .accountPage--recipeNameSection{
+  display: flex;
+  flex-direction: column;
   grid-row: 2;
   grid-column: 1;
- 
-  
-}
-.accountPage--calCountSection{
-  grid-row: 2;
-  grid-column: 2;
- 
-}
+  align-content: center;
+  justify-content: center;
 
-.accountPage--deleteButtonSection{
-  Display:grid;
-  grid-row: 2;
-  grid-column: 3;
-  justify-items: ;
-  
 }
 
 .accountPage--recipeInfo{
-  Background: white;
+  Background: honeydew;
   margin: 10px;
-  width: 50%;
-  height: 20%;
+  border-style: solid;
+  border-width: 2px;
+  border-color:#413F3D;
+  display:flex;
+  justify-content: center;
+
+}
+.accountPage--calCountSection{
+  display: flex;
+  flex-direction: column;
+  grid-row: 2;
+  grid-column: 2;
+  height: 100%;
+  justify-content: center;
+  align-content: center
+
+}
+
+.accountPage--deleteButtonSection{
+  display: flex;
+  flex-direction: column;
+  grid-row: 2;
+  grid-column: 3;
+  align-content: center;
+  height: 100%;
+ 
 }
 
 .accountPage-deleteBtn{
-  grid-row: 2;
-  grid-column: 2;
+font-size: 14px;
+margin: 11px;
+border-width: 2px;
+border-color:#413F3D;
+background-color: honeydew;
 
-  
-  
 }
 

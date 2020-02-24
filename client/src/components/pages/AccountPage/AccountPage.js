@@ -33,14 +33,11 @@ class AccountPage extends Component {
         </div>
         <div className="accountPage--deleteButtonSection">
         <div></div>
-        
       {
         this.props.userRecipes.map((recipe, index) => ( 
-          <div>
               <button className="accountPage-deleteBtn" onClick={() => this.props.onDelete(index)}>
                   Remove
               </button>
-          </div>
         ))
       } 
         </div>

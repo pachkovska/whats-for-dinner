@@ -5,7 +5,7 @@
     /* background: url('https://cdn.shopify.com/s/files/1/1060/9112/products/96_1024x1024.png?v=1526760250') fixed; */
     /* background: url('https://uhs.berkeley.edu/sites/default/files/styles/openberkeley_brand_widgets_rectangle/public/sos-nutrition-whatseatingyou.jpg?itok=uqiZ3lPh'); */
    
-    background: whitesmoke;
+    background: honeydew;
     background-size: auto;
     min-height: 100vh;
     display: grid;
@@ -19,8 +19,8 @@
 .App-navigation {
     width: 100%;
     padding: 10px;
-    background-color: navy;
-    color: whitesmoke;
+    background-color: tomato;
+    
 }
 
 .App-sidebar {

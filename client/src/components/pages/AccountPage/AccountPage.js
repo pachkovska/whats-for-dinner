@@ -12,17 +12,17 @@ class AccountPage extends Component {
         </div>
         <div className= "accountPage-recipeSection">
           <div className= "accountPage--recipeNameSection">
-          <div>Saved Recipe</div>
+          <div className= "accountPage-recipeSectionTitle">Saved Recipe</div>
         {
               this.props.userRecipes.map((recipe, index) => ( 
                 <div className= "accountPage--recipeInfo">
-              {index+1}) {recipe[0]}
+              {recipe[0]}
                 </div>
               ))
             } 
         </div>
         <div className= "accountPage--calCountSection">
-        <div>Total Calories</div>
+        <div className= "accountPage-recipeSectionTitle">Total Calories</div>
         {
               this.props.userRecipes.map((recipe, index) => ( 
                 <div className= "accountPage--recipeInfo">

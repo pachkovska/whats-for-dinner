@@ -21,6 +21,7 @@ class App extends Component {
     ["pasta", "350"],
     ["Chicken Parm", "500"],
     ["Bologna Sandwich", "ew"],
+    ["Crab Rangoon", "650"],
     ],
   }
   

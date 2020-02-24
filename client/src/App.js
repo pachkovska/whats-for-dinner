@@ -5,11 +5,10 @@ import auth0Client from './Auth';
 
 import './App.css';
 
-import LandingPage from './components/pages/LandingPage/LandingPage.js';
+
 import Homepage from './components/pages/Homepage/Homepage.js';
 import AccountPage from './components/pages//AccountPage/AccountPage.js';
-import Blog from './components/pages/Blog/Blog.js';
-import WriteArticle from './components/pages/WriteArticle/WriteArticle.js';
+
 
 
 class App extends Component {
@@ -18,7 +17,11 @@ class App extends Component {
     current_ingridient: '',
     ingridients: [],
     nutrientData: [],
-    
+    userRecipes: [
+    ["pasta", "350"],
+    ["Chicken Parm", "500"],
+    ["Bologna Sandwich", "ew"],
+    ],
   }
   
   onIngridientChange = (ev) => {
@@ -55,34 +58,39 @@ class App extends Component {
       current_ingridient: '',
     })
   }
+
+  onDelete(index){
+    let userRecipes = this.state.userRecipes.slice();
+    userRecipes.splice(index, 1);
+    this.setState({
+      userRecipes : userRecipes,
+    });
+  }
   
   render() {
     return (
       <div className="App">
          <nav className="App-navigation">
           {/* <h1 className="App-title">What's For Dinner</h1> */}
-          <h1 className="App-title">DinnerCount</h1>
-          <Link to="/homepage">Home Page</Link>
-
-          <Link to="/account">Account</Link>
-          <Link to="/blog/">Blog</Link>
-          <Link to="/write/">Write Article</Link>
+          <Link to="/"><h1 className="App-title">Dine&Cashe</h1></Link>
+          <Link to="/account">My Recipes</Link>
             {/* <Link to={auth0Client.isAuthenticated() ? '/signout/' : '/login/'} component={LandingPage} > Signout  */}
             <Link to='/login/' component={Login}>Login </Link> 
-            <Link to='/logout/' component={LandingPage} /> 
+            <Link to='/logout/' component={Homepage} /> 
           {/* <Link to="/signuppage/">Signup</Link> */}
-
-
         </nav>
 
         <div className="App-mainContent">
           <Switch>
-            <Route exact path='/homepage' component={Homepage} />
-            <Route exact path='/account' component={AccountPage} />
-            <Route exact path='/blog/' component={Blog} />
-            <Route exact path='/write/' component={WriteArticle} />
+            <Route exact path='/' component={Homepage} />
+            <Route exact path='/account' render={props => 
+             (<AccountPage {...props} 
+              userRecipes = {this.state.userRecipes}
+              onDelete = {this.onDelete.bind(this)}
+              />)
+              }/> 
             <Route exact path='/login/' component={Login} /> 
-            <Route exact path='/logout/' component={LandingPage} />
+            <Route exact path='/logout/' component={Homepage} />
           </Switch>
         </div>
         <div className="userInput">

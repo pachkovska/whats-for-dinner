@@ -10,9 +10,51 @@ class AccountPage extends Component {
   componentDidMount() {
     let loggedinUser = localStorage.getItem('user_id')
     this.setState({
-      loggedinUser: localStorage.getItem('user_id')
+      loggedinUser: loggedinUser
     }, this.fetchMeals(loggedinUser))
   }
+
+  // mongo db woudl be db.usermeals.find({ user_id: this.state.loggedinUser })
+
+  fetchMeals(loggedinUser) {
+    console.log('Fetching data from API');
+    fetch(`/api/mongodb/usermeals/?user_id=${loggedinUser}`) // query meals of specific user
+    // fetch('/api/mongodb/usermeals/')
+      .then(response => response.json())
+      .then(data => {
+        console.log('Got data back', data);
+        this.setState({
+          userMeals: data,
+        });
+      });
+  }
+
+  saveMeal(meal) {
+  const formData = {
+    user: this.state.loggedinUser,
+    meal: meal,
+  }
+    fetch('/api/mongodb/usermeals/', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(formData),
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Got this back', data);
+
+        // Call method to refresh data
+        this.fetchMeals();
+      });
+    }
+
+  // onDelete(index){
+  //   let recepies = this.state.recipes.slice();
+  //   recepies.splice(index, 1);
+  //   this.setState({
+  //     loggedinUser: localStorage.getItem('user_id')
+  //   }, this.fetchMeals(loggedinUser))
+  // }
 
   // mongo db woudl be db.usermeals.find({ user_id: this.state.loggedinUser })
 

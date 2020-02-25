@@ -71,7 +71,7 @@ class App extends Component {
           <Link to="/"><h1 className="App-title">Dine&Cashe</h1></Link>
           <Link to="/account/">My Recipes</Link>
             {/* <Link to={auth0Client.isAuthenticated() ? '/signout/' : '/login/'} component={LandingPage} > Signout  */}
-            <Link to='/login/' component={Login}>Login </Link> 
+            <Link to='/login/' component={Login}>Login</Link> 
             <Link to='/logout/' component={Homepage} /> 
           {/* <Link to="/signuppage/">Signup</Link> */}
         </nav>
@@ -99,6 +99,7 @@ class App extends Component {
             /><button onClick={this.getFoodList}>Submit</button>
         </div>
         <button onClick={auth0Client.signOut}>Sign Out</button>
+        
       </div>
     );
   }

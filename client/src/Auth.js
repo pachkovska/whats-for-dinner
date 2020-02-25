@@ -7,9 +7,9 @@ class Auth {
       domain: 'dev-sb1wdmd7.auth0.com',
       audience: 'https://dev-sb1wdmd7.auth0.com/userinfo',
       clientID: 'gTDjCRiSMtZXe8z9TkZDdaP7z4K1HjGH',
-      redirectUri: 'http://localhost:3000',
-      responseType: 'id_token',
-      scope: 'openid profile'
+      redirectUri: 'http://localhost:3000/callback',
+      responseType: 'token id_token',
+      scope: 'openid profile email'
     });
 
     this.getProfile = this.getProfile.bind(this);
@@ -36,23 +36,46 @@ class Auth {
   }
 
   handleAuthentication() {
+    console.log('authentication is getting executed')
     return new Promise((resolve, reject) => {
       this.auth0.parseHash((err, authResult) => {
+        console.log('auth result', authResult)
         if (err) return reject(err);
         if (!authResult || !authResult.idToken) {
           return reject(err);
         }
         this.idToken = authResult.idToken;
         this.profile = authResult.idTokenPayload;
-        // set the time that the id token will expire at
         this.expiresAt = authResult.idTokenPayload.exp * 1000;
+  
+        this.setSession(authResult);
         resolve();
       });
     })
   }
 
+  setSession (authResult) {
+    // Set the time that the access token will expire at
+    let expiresAt = JSON.stringify(
+      authResult.expiresIn * 1000 + new Date().getTime()
+    )
+    localStorage.setItem('access_token', authResult.accessToken)
+    localStorage.setItem('id_token', authResult.idToken)
+    localStorage.setItem('user_id', authResult.idTokenPayload.sub)
+    localStorage.setItem('email', authResult.idTokenPayload.name)
+    localStorage.setItem('expires_at', expiresAt)
+    localStorage.setItem('isLoggedIn', 'true');
+  }
+
   signOut() {
     // clear id token, profile, and expiration
+    console.log('User is being signed out')
+    localStorage.removeItem('access_token')
+    localStorage.removeItem('id_token')
+    localStorage.removeItem('user_id')
+    localStorage.removeItem('email')
+    localStorage.removeItem('expires_at')
+    localStorage.removeItem('isLoggedIn');
     this.idToken = null;
     this.profile = null;
     this.expiresAt = null;

@@ -1,45 +1,127 @@
 import React, { Component } from 'react';
 import './AccountPage.css';
-
+ 
 class AccountPage extends Component {
+  state = {
+    userMeals: [],
+    loggedinUser: '',
+  }
+
+  componentDidMount() {
+    let loggedinUser = localStorage.getItem('user_id')
+    this.setState({
+      loggedinUser: loggedinUser
+    }, this.fetchMeals(loggedinUser))
+  }
+
+  // mongo db woudl be db.usermeals.find({ user_id: this.state.loggedinUser })
+
+  fetchMeals(loggedinUser) {
+    console.log('Fetching data from API');
+    fetch(`/api/mongodb/usermeals/?user_id=${loggedinUser}`) // query meals of specific user
+    // fetch('/api/mongodb/usermeals/')
+      .then(response => response.json())
+      .then(data => {
+        console.log('Got data back', data);
+        this.setState({
+          userMeals: data,
+        });
+      });
+  }
+
+  saveMeal(meal) {
+  const formData = {
+    user: this.state.loggedinUser,
+    meal: meal,
+  }
+    fetch('/api/mongodb/usermeals/', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(formData),
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Got this back', data);
+
+        // Call method to refresh data
+        this.fetchMeals();
+      });
+    }
+
+  // onDelete(index){
+  //   let recepies = this.state.recipes.slice();
+  //   recepies.splice(index, 1);
+  //   this.setState({
+  //     loggedinUser: localStorage.getItem('user_id')
+  //   }, this.fetchMeals(loggedinUser))
+  // }
+
+  // mongo db woudl be db.usermeals.find({ user_id: this.state.loggedinUser })
+
+  fetchMeals(loggedinUser) {
+    console.log('Fetching data from API');
+    fetch('/api/mongodb/usermeals/?user_id='+ loggedinUser) // query meals of specific user
+    // fetch('/api/mongodb/usermeals/')
+      .then(response => response.json())
+      .then(data => {
+        console.log('Got data back', data);
+        this.setState({
+          userMeals: data,
+        });
+      });
+  }
+
+  saveMeal(meal) {
+  const formData = {
+    user: this.state.loggedinUser,
+    meal: meal,
+  }
+    fetch('/api/mongodb/usermeals/', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(formData),
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Got this back', data);
+
+        // Call method to refresh data
+        this.fetchMeals();
+      });
+    }
+
+  // onDelete(index){
+  //   let recepies = this.state.recipes.slice();
+  //   recepies.splice(index, 1);
+  //   this.setState({
+  //     recipes : recepies,
+  //   });
+  //   console.log(index);
+  // }
+
 
   render() {
     return (
       <div className="accountPageContainer">
         <div className= "accountPage-body">
-        <h1>Welcome to your Account Page, [username]!</h1>
-        <p> See below for your saved recepies. You can also delete them from this page as well.</p>
-        </div>
-        <div className= "accountPage-recipeSection">
-          <div className= "accountPage--recipeNameSection">
-          <div className= "accountPage-recipeSectionTitle">Saved Recipe</div>
-        {
-              this.props.userRecipes.map((recipe, index) => ( 
-                <div className= "accountPage--recipeInfo">
-              {recipe[0]}
+          <h1>My Account</h1>
+          <div className= "accountPage-mealSection">
+            <p>Saved meals</p><p>Estimated Calorie Count</p>
+            {
+              this.state.userMeals.map((meal, index) => (
+                <div>
+                  <div className= "accountPage--recipeInfo">
+                    {meal.meal}
+                  </div>
+                  <div className= "accountPage-calCount">
+                    {meal.kcal}
+                  </div>
+                  <button onClick={() => this.onDelete(index)}>
+                      Remove
+                  </button>
                 </div>
               ))
-            } 
-        </div>
-        <div className= "accountPage--calCountSection">
-        <div className= "accountPage-recipeSectionTitle">Total Calories</div>
-        {
-              this.props.userRecipes.map((recipe, index) => ( 
-                <div className= "accountPage--recipeInfo">
-                    {recipe[1]}
-                </div>
-              ))
-            } 
-        </div>
-        <div className="accountPage--deleteButtonSection">
-        <div></div>
-      {
-        this.props.userRecipes.map((recipe, index) => ( 
-              <button className="accountPage-deleteBtn" onClick={() => this.props.onDelete(index)}>
-                  Remove
-              </button>
-        ))
-      } 
+            }
         </div>
         </div>
         </div>

@@ -8,16 +8,17 @@ class AccountPage extends Component {
   }
 
   componentDidMount() {
+    let loggedinUser = localStorage.getItem('user_id')
     this.setState({
       loggedinUser: localStorage.getItem('user_id')
-    }, this.fetchMeals())
+    }, this.fetchMeals(loggedinUser))
   }
 
   // mongo db woudl be db.usermeals.find({ user_id: this.state.loggedinUser })
 
-  fetchMeals() {
+  fetchMeals(loggedinUser) {
     console.log('Fetching data from API');
-    fetch(`/api/mongodb/usermeals/?user_id=${this.state.loggedinUser}`) // query meals of specific user
+    fetch('/api/mongodb/usermeals/?user_id='+ loggedinUser) // query meals of specific user
     // fetch('/api/mongodb/usermeals/')
       .then(response => response.json())
       .then(data => {

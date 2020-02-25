@@ -1,14 +1,51 @@
 import React, { Component } from 'react';
 import './AccountPage.css';
-
+ 
 class AccountPage extends Component {
   state = {
-    recipes: [
-      ["pasta", "350"],
-      ["Chicken Parm", "500"],
-      ["Bologna Sandwich", "ew"],
-    ]
+    userMeals: [],
+    loggedinUser: '',
   }
+
+  componentDidMount() {
+    this.setState({
+      loggedinUser: localStorage.getItem('user_id')
+    }, this.fetchMeals())
+  }
+
+  // mongo db woudl be db.usermeals.find({ user_id: this.state.loggedinUser })
+
+  fetchMeals() {
+    console.log('Fetching data from API');
+    fetch(`/api/mongodb/usermeals/?user_id=${this.state.loggedinUser}`) // query meals of specific user
+    // fetch('/api/mongodb/usermeals/')
+      .then(response => response.json())
+      .then(data => {
+        console.log('Got data back', data);
+        this.setState({
+          blogPosts: data,
+        });
+      });
+  }
+
+  saveMeal(meal) {
+  const formData = {
+    user: this.state.loggedinUser,
+    meal: meal,
+  }
+    fetch('/api/mongodb/usermeals/', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(formData),
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Got this back', data);
+
+        // Call method to refresh data
+        this.fetchMeals();
+      });
+    }
 
   onDelete(index){
     let recepies = this.state.recipes.slice();
@@ -24,12 +61,25 @@ class AccountPage extends Component {
     return (
       <div className="accountPageContainer">
         <div className= "accountPage-body">
-        <h1>Welcome to your Account Page, [username]!</h1>
-        <p> See below for your saved meals. You can also delete them from this page as well.</p>
-        </div>
-        <div className= "accountPage-mealSection">
-          <div>Saved Recipe</div>
-        {
+          <h1>My Account</h1>
+          <div className= "accountPage-mealSection">
+            <p>Saved meals</p><p>Estimated Calorie Count</p>
+            {
+              this.state.userMeals.map((meal, index) => (
+                <div>
+                  <div className= "accountPage--recipeInfo">
+                    {meal.meal}
+                  </div>
+                  <div className= "accountPage-calCount">
+                    {meal.kcal}
+                  </div>
+                  <button onClick={() => this.onDelete(index)}>
+                      Remove
+                  </button>
+                </div>
+              ))
+            }
+        {/* {
               this.state.recipes.map((recipe, index) => ( 
                 <div className= "accountPage--recipeInfo">
               {index+1}) {recipe[0]}
@@ -56,7 +106,7 @@ class AccountPage extends Component {
               </button>
           </div>
         ))
-      } 
+      } </div> */}
         </div>
         </div>
         </div>

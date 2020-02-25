@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link, Switch, Route } from 'react-router-dom';
 import Login from './Login';
-import auth0Client from './Auth';
+import Callback from './components/Callback.js';
+import auth0Client from './Auth.js';
 
 import './App.css';
 
@@ -18,7 +19,8 @@ class App extends Component {
     current_ingridient: '',
     ingridients: [],
     nutrientData: [],
-    
+    // userMeals: [],
+    // loggedinUser: '',
   }
   
   onIngridientChange = (ev) => {
@@ -83,6 +85,7 @@ class App extends Component {
             <Route exact path='/write/' component={WriteArticle} />
             <Route exact path='/login/' component={Login} /> 
             <Route exact path='/logout/' component={LandingPage} />
+            <Route exact path='/callback/' component={Callback} />
           </Switch>
         </div>
         <div className="userInput">

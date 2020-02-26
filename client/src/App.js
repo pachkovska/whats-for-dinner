@@ -15,25 +15,35 @@ import AccountPage from './components/pages/AccountPage/AccountPage.js';
 class App extends Component {
 
   state = {
-    current_ingridient: '',
+    currentIngridient: '',
     ingridients: [],
     nutrientData: [],
+    loggedinUser: '',
+    userMeals: [],
   }
   
+
+  getUser = () => {
+    let loggedinUser = localStorage.getItem('user_id')
+    this.setState({
+      loggedinUser: loggedinUser
+    }, this.fetchMeals(loggedinUser))
+  }
+
   onIngridientChange = (ev) => {
     let value = ev.target.value;
     this.setState({
-      current_ingridient: value,
+      currentIngridient: value,
     });
   }
 
   getFoodList = () => {
-    console.log(this.state.current_ingridient)
-    fetch(`https://api.nal.usda.gov/fdc/v1/search?api_key=o5SMCYbasYSA5j3KyCNfq2DxrcMJZiQ1KHmhnnYH&generalSearchInput=${this.state.current_ingridient}`)
+    console.log(this.state.currentIngridient)
+    fetch(`https://api.nal.usda.gov/fdc/v1/search?api_key=o5SMCYbasYSA5j3KyCNfq2DxrcMJZiQ1KHmhnnYH&generalSearchInput=${this.state.currentIngridient}`)
     .then(response => response.json())
     .then(data => {
         this.setState({
-          ingridients: [...this.state.ingridients, {id: data.foods[0].fdcId, name: this.state.current_ingridient}], 
+          ingridients: [...this.state.ingridients, {id: data.foods[0].fdcId, name: this.state.currentIngridient}], 
         }, this.foodSearch(data.foods[0].fdcId))
     });
     
@@ -43,17 +53,57 @@ class App extends Component {
     fetch(`https://api.nal.usda.gov/fdc/v1/${lastSavedIngridient}?api_key=o5SMCYbasYSA5j3KyCNfq2DxrcMJZiQ1KHmhnnYH`)
     .then(response => response.json())
     .then(data => {
+        console.log(data.foodNutrients[0].nutrient.unitName)
         this.setState({
           nutrientData: [...this.state.nutrientData, {id: lastSavedIngridient, foodNutrients: data.foodNutrients}],
         }, this.clearInputField())
     })
   }
 
+  getCalorieCount() {
+    // console.log(this.state.nutrientData)
+
+  }
+
+
+
   clearInputField() {
     this.setState({
-      current_ingridient: '',
+      currentIngridient: '',
     })
   }
+
+  fetchMeals(loggedinUser) {
+    console.log('Fetching data from API');
+    fetch(`/api/mongodb/usermeals/?user_id=${loggedinUser}`) // query meals of specific user
+    // fetch('/api/mongodb/usermeals/')
+      .then(response => response.json())
+      .then(data => {
+        console.log('Got data back', data);
+        this.setState({
+          userMeals: data,
+        });
+      });
+  }
+
+  saveMeal(meal) {
+    const formData = {
+      user: this.state.loggedinUser,
+      meal: meal,
+    }
+      fetch('/api/mongodb/usermeals/', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(formData),
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Got this back', data);
+  
+          // Call method to refresh data
+          this.fetchMeals(formData.user);
+        });
+      }
 
   // onDelete(index){
   //   let userRecipes = this.state.userRecipes.slice();
@@ -64,42 +114,48 @@ class App extends Component {
   // }
   
   render() {
+    
     return (
       <div className="App">
          <nav className="App-navigation">
           {/* <h1 className="App-title">What's For Dinner</h1> */}
           <Link to="/"><h1 className="App-title">Dine&Cashe</h1></Link>
-          <Link to="/account/">My Recipes</Link>
+         {/* { this.state.loggedinUser === ''  */}
+           <Link to="/account/">My Account</Link> 
+          <Link to='/login/' component={Login}>Login or Signup</Link> 
             {/* <Link to={auth0Client.isAuthenticated() ? '/signout/' : '/login/'} component={LandingPage} > Signout  */}
-            <Link to='/login/' component={Login}>Login</Link> 
+           
             <Link to='/logout/' component={Homepage} /> 
           {/* <Link to="/signuppage/">Signup</Link> */}
         </nav>
 
         <div className="App-mainContent">
           <Switch>
-            <Route exact path='/' component={Homepage} />
-            {/* <Route exact path='/account' render={props => 
+            <Route exact path='/' render={props => 
+              (<Homepage {...props} 
+                currentIngridient={this.state.currentIngridient}
+                onIngridientChange={this.onIngridientChange}
+                getFoodList={this.getFoodList}
+              />)
+            } />
+            <Route exact path='/account' render={props => 
              (<AccountPage {...props} 
-              userRecipes = {this.state.userRecipes}
+              getUser={this.getUser.bind(this)}
+              userMeals={this.state.userMeals}
               // onDelete = {this.onDelete.bind(this)}
               />)
-              }/>  */}
-            <Route exact path='/account/' component={AccountPage} />  
-            <Route exact path='/login/' component={Login} /> 
+              }/> 
+            {/* { this.state.loggedinUser != '' && <Route exact path='/account/' component={AccountPage} />  } */}
+            {/* { !this.state.loggedinUser && <Route exact path='/login/' component={Login} /> } */}
+            <Route exact path='/login/' component={Login} />
             <Route exact path='/logout/' component={Homepage} />
             <Route exact path='/callback/' component={Callback} />
           </Switch>
         </div>
-        <div className="userInput">
-          <input
-              placeholder="Ingridient"
-              value={this.state.current_ingridient}
-              onChange={this.onIngridientChange}
-            /><button onClick={this.getFoodList}>Submit</button>
-        </div>
         <button onClick={auth0Client.signOut}>Sign Out</button>
-        
+        <div>
+              <button onClick={this.getCalorieCount.bind(this)}>Calories</button>
+        </div>
       </div>
     );
   }

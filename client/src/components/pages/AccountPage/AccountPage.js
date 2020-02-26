@@ -2,51 +2,36 @@ import React, { Component } from 'react';
 import './AccountPage.css';
  
 class AccountPage extends Component {
-  state = {
-    userMeals: [],
-    loggedinUser: '',
-  }
+
+  // state = {
+  //   userMeals: [],
+  //   loggedinUser: '',
+  // }
 
   componentDidMount() {
-    let loggedinUser = localStorage.getItem('user_id')
-    this.setState({
-      loggedinUser: loggedinUser
-    }, this.fetchMeals(loggedinUser))
+    this.props.getUser()
   }
 
   // mongo db woudl be db.usermeals.find({ user_id: this.state.loggedinUser })
 
-  fetchMeals(loggedinUser) {
-    console.log('Fetching data from API');
-    fetch(`/api/mongodb/usermeals/?user_id=${loggedinUser}`) // query meals of specific user
-    // fetch('/api/mongodb/usermeals/')
-      .then(response => response.json())
-      .then(data => {
-        console.log('Got data back', data);
-        this.setState({
-          userMeals: data,
-        });
-      });
-  }
+  // saveMeal(meal) {
+  // const formData = {
+  //   user: this.state.loggedinUser,
+  //   meal: meal,
+  // }
+  //   fetch('/api/mongodb/usermeals/', {
+  //       method: 'POST',
+  //       headers: {'Content-Type': 'application/json'},
+  //       body: JSON.stringify(formData),
+  //     })
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       console.log('Got this back', data);
 
-  saveMeal(meal) {
-  const formData = {
-    user: this.state.loggedinUser,
-    meal: meal,
-  }
-    fetch('/api/mongodb/usermeals/', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(formData),
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Got this back', data);
-
-        // Call method to refresh data
-        this.fetchMeals();
-      });
-    }
+  //       // Call method to refresh data
+  //       this.fetchMeals();
+  //     });
+  //   }
 
   // onDelete(index){
   //   let recepies = this.state.recipes.slice();
@@ -58,37 +43,37 @@ class AccountPage extends Component {
 
   // mongo db woudl be db.usermeals.find({ user_id: this.state.loggedinUser })
 
-  fetchMeals(loggedinUser) {
-    console.log('Fetching data from API');
-    fetch('/api/mongodb/usermeals/?user_id='+ loggedinUser) // query meals of specific user
-    // fetch('/api/mongodb/usermeals/')
-      .then(response => response.json())
-      .then(data => {
-        console.log('Got data back', data);
-        this.setState({
-          userMeals: data,
-        });
-      });
-  }
+  // fetchMeals(loggedinUser) {
+  //   console.log('Fetching data from API');
+  //   fetch('/api/mongodb/usermeals/?user_id='+ loggedinUser) // query meals of specific user
+  //   // fetch('/api/mongodb/usermeals/')
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       console.log('Got data back', data);
+  //       this.setState({
+  //         userMeals: data,
+  //       });
+  //     });
+  // }
 
-  saveMeal(meal) {
-  const formData = {
-    user: this.state.loggedinUser,
-    meal: meal,
-  }
-    fetch('/api/mongodb/usermeals/', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(formData),
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Got this back', data);
+  // saveMeal(meal) {
+  // const formData = {
+  //   user: this.state.loggedinUser,
+  //   meal: meal,
+  // }
+  //   fetch('/api/mongodb/usermeals/', {
+  //       method: 'POST',
+  //       headers: {'Content-Type': 'application/json'},
+  //       body: JSON.stringify(formData),
+  //     })
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       console.log('Got this back', data);
 
-        // Call method to refresh data
-        this.fetchMeals();
-      });
-    }
+  //       // Call method to refresh data
+  //       this.fetchMeals();
+  //     });
+  //   }
 
   // onDelete(index){
   //   let recepies = this.state.recipes.slice();
@@ -108,7 +93,7 @@ class AccountPage extends Component {
           <div className= "accountPage-mealSection">
             <p>Saved meals</p><p>Estimated Calorie Count</p>
             {
-              this.state.userMeals.map((meal, index) => (
+              this.props.userMeals.map((meal, index) => (
                 <div>
                   <div className= "accountPage--recipeInfo">
                     {meal.meal}

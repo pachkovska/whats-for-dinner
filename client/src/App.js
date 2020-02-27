@@ -20,6 +20,7 @@ class App extends Component {
     nutrientData: [],
     loggedinUser: '',
     userMeals: [],
+    calorieCount: []
   }
   
 
@@ -38,45 +39,53 @@ class App extends Component {
   }
 
   getFoodList = () => {
-    console.log(this.state.currentIngridient)
+    console.log('#1 get food list')
+    const ingridient = this.state.currentIngridient;
+
+    this.setState({
+      currentIngridient: '',
+    })
+
     fetch(`https://api.nal.usda.gov/fdc/v1/search?api_key=o5SMCYbasYSA5j3KyCNfq2DxrcMJZiQ1KHmhnnYH&generalSearchInput=${this.state.currentIngridient}`)
     .then(response => response.json())
     .then(data => {
+      console.log(data);
+        const id = data.foods[0].fdcId;
         this.setState({
-          ingridients: [...this.state.ingridients, {id: data.foods[0].fdcId, name: this.state.currentIngridient}], 
-        }, this.foodSearch(data.foods[0].fdcId))
-    });
-    
+          ingridients: [...this.state.ingridients, {id: id, name: ingridient}], 
+        }, () => {
+          this.foodSearch(id);
+        })
+    }); 
   }
 
-  foodSearch (lastSavedIngridient) {
+  foodSearch = (lastSavedIngridient) => {
+    console.log('#2 food search')
     fetch(`https://api.nal.usda.gov/fdc/v1/${lastSavedIngridient}?api_key=o5SMCYbasYSA5j3KyCNfq2DxrcMJZiQ1KHmhnnYH`)
     .then(response => response.json())
     .then(data => {
-        console.log(data.foodNutrients[0].nutrient.unitName)
+      const newNutrientData = [...this.state.nutrientData, {id: lastSavedIngridient, foodNutrients: data.foodNutrients}]
+      console.log("newNutrientData", newNutrientData)
         this.setState({
-          nutrientData: [...this.state.nutrientData, {id: lastSavedIngridient, foodNutrients: data.foodNutrients}],
-        }, this.clearInputField())
+          nutrientData: newNutrientData,
+        }, () => {
+          this.getCalorieCount(lastSavedIngridient)
+        })
     })
   }
 
-  getCalorieCount() {
-    // console.log(this.state.nutrientData)
-
-  }
-
-
-
-  clearInputField() {
+  getCalorieCount = (lastSavedIngridient) => {
+    console.log('#4 get calorie count')
+    let calorieElement = this.state.nutrientData.filter(el => el.id === lastSavedIngridient)[0].foodNutrients.filter(el => el.nutrient.unitName === 'kcal')[0].amount;
+    console.log(calorieElement)
     this.setState({
-      currentIngridient: '',
+      calorieCount: [...this.state.calorieCount, { name: this.state.ingridients[this.state.ingridients.length - 1].name, kcal:  calorieElement}]
     })
   }
 
   fetchMeals(loggedinUser) {
     console.log('Fetching data from API');
     fetch(`/api/mongodb/usermeals/?user_id=${loggedinUser}`) // query meals of specific user
-    // fetch('/api/mongodb/usermeals/')
       .then(response => response.json())
       .then(data => {
         console.log('Got data back', data);
@@ -136,11 +145,12 @@ class App extends Component {
                 currentIngridient={this.state.currentIngridient}
                 onIngridientChange={this.onIngridientChange}
                 getFoodList={this.getFoodList}
+                calorieCount={this.state.calorieCount}
               />)
             } />
             <Route exact path='/account' render={props => 
              (<AccountPage {...props} 
-              getUser={this.getUser.bind(this)}
+              getUser={this.getUser.bind(this)} //see if this will work without binding
               userMeals={this.state.userMeals}
               // onDelete = {this.onDelete.bind(this)}
               />)

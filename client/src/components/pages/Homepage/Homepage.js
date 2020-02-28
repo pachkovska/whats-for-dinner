@@ -22,7 +22,15 @@ class Homepage extends Component {
                     placeholder="Ingridient"
                     value={this.props.currentIngridient}
                     onChange={this.props.onIngridientChange}
-                /><button onClick={this.props.getFoodList}>Add</button> 
+                /><button className="MainColor" onClick={this.props.getFoodList}>Add</button> 
+            </div>
+            <div className="">
+                <p>Total:</p>
+                <span>
+                {this.props.calorieCount 
+                && this.props.calorieCount.reduce((totalCalories, element) => totalCalories + Number(element.kcal), 0)
+                }
+                </span> 
             </div>
         </div>
        );

@@ -3,6 +3,8 @@ import { Link, Switch, Route } from 'react-router-dom';
 import Login from './Login';
 import Callback from './components/Callback.js';
 import auth0Client from './Auth.js';
+import ReactModal from 'react-modal';
+import logo from './images/calorize-logo.png';
 
 import './App.css';
 
@@ -20,14 +22,17 @@ class App extends Component {
     nutrientData: [],
     loggedinUser: '',
     userMeals: [],
-    calorieCount: []
+    calorieCount: [],
+    showModal: false,
+    saved: '',
+    showAccount: false,
   }
   
 
   getUser = () => {
-    let loggedinUser = localStorage.getItem('user_id')
+    let loggedinUser = localStorage.getItem('user_id');
     this.setState({
-      loggedinUser: loggedinUser
+      loggedinUser: loggedinUser,
     }, this.fetchMeals(loggedinUser))
   }
 
@@ -88,7 +93,6 @@ class App extends Component {
     fetch(`/api/mongodb/usermeals/?user_id=${loggedinUser}`) // query meals of specific user
       .then(response => response.json())
       .then(data => {
-        console.log('Got data back', data);
         this.setState({
           userMeals: data,
         });
@@ -97,9 +101,12 @@ class App extends Component {
 
   saveMeal(meal) {
     const formData = {
-      user: this.state.loggedinUser,
+      user_id: this.state.loggedinUser,
       meal: meal,
+      kcal: 208,
     }
+    console.log(formData)
+    console.log('About to send the data to mongo')
       fetch('/api/mongodb/usermeals/', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
@@ -110,9 +117,33 @@ class App extends Component {
           console.log('Got this back', data);
   
           // Call method to refresh data
-          this.fetchMeals(formData.user);
+          this.fetchMeals(formData.user_id);
         });
       }
+
+  handleOpenModal = () => {
+    this.setState({ showModal: true });
+  }
+
+  handleCloseModal = () => {
+    const name = this.state.saved;
+    console.log(name)
+    this.setState({ showModal: false }, 
+      () => {this.saveMeal(name)});
+  }
+
+  onMealNameChange = (ev) => {
+    let value = ev.target.value;
+    this.setState({
+      saved: value,
+    });
+  }
+
+  showAccount = () => {
+    this.setState({
+      showAccount: true,
+    })
+  }
 
   // onDelete(index){
   //   let userRecipes = this.state.userRecipes.slice();
@@ -127,15 +158,17 @@ class App extends Component {
     return (
       <div className="App">
          <nav className="App-navigation">
-          {/* <h1 className="App-title">What's For Dinner</h1> */}
-          <Link to="/"><h1 className="App-title">Dine&Cashe</h1></Link>
-         {/* { this.state.loggedinUser === ''  */}
-           <Link to="/account/">My Account</Link> 
-          <Link to='/login/' component={Login}>Login or Signup</Link> 
-            {/* <Link to={auth0Client.isAuthenticated() ? '/signout/' : '/login/'} component={LandingPage} > Signout  */}
-           
-            <Link to='/logout/' component={Homepage} /> 
-          {/* <Link to="/signuppage/">Signup</Link> */}
+           <img src={logo} />
+          <Link to="/"><h1 className="App-title">CalorieCache</h1></Link>
+         {
+            this.state.showAccount 
+            ? <Link to="/account/">My Account</Link>
+            : <Link to='/login/' component={Login}>Login or Signup</Link>  
+         }
+         {
+           this.state.showAccount &&  
+           <Link onClick={auth0Client.signOut} to='/logout/' component={Homepage}>Sign Out</Link>
+         }
         </nav>
 
         <div className="App-mainContent">
@@ -148,23 +181,37 @@ class App extends Component {
                 calorieCount={this.state.calorieCount}
               />)
             } />
-            <Route exact path='/account' render={props => 
-             (<AccountPage {...props} 
-              getUser={this.getUser.bind(this)} //see if this will work without binding
-              userMeals={this.state.userMeals}
-              // onDelete = {this.onDelete.bind(this)}
-              />)
-              }/> 
-            {/* { this.state.loggedinUser != '' && <Route exact path='/account/' component={AccountPage} />  } */}
-            {/* { !this.state.loggedinUser && <Route exact path='/login/' component={Login} /> } */}
+              <Route exact path='/account/' render={props => 
+              (<AccountPage {...props} 
+                getUser={this.getUser.bind(this)} //see if this will work without binding
+                userMeals={this.state.userMeals}
+                // onDelete = {this.onDelete.bind(this)}
+                />)
+              }/>
             <Route exact path='/login/' component={Login} />
             <Route exact path='/logout/' component={Homepage} />
-            <Route exact path='/callback/' component={Callback} />
+            <Route exact path='/callback/'  render={props => 
+              (<Callback {...props}
+                onShowAccount={this.showAccount}
+              />)
+            }/>
           </Switch>
         </div>
-        <button onClick={auth0Client.signOut}>Sign Out</button>
         <div>
-              <button onClick={this.getCalorieCount.bind(this)}>Calories</button>
+          { this.state.showAccount &&
+            <button onClick={this.handleOpenModal}>Save current meal</button>
+          }
+            <ReactModal 
+                isOpen={this.state.showModal}
+                contentLabel="Please enter name for your meal/recipe">  
+                <p>Please enter name for your meal/recipe</p>              
+                  <input
+                  placeholder="Meal name"
+                  value={this.state.saved}
+                  onChange={this.onMealNameChange}
+                />
+                <button onClick={this.handleCloseModal}>Save</button>  
+            </ReactModal>
         </div>
       </div>
     );

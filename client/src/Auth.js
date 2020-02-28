@@ -64,7 +64,7 @@ class Auth {
     localStorage.setItem('user_id', authResult.idTokenPayload.sub)
     localStorage.setItem('email', authResult.idTokenPayload.name)
     localStorage.setItem('expires_at', expiresAt)
-    localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('isLoggedIn', true);
   }
 
   signOut() {

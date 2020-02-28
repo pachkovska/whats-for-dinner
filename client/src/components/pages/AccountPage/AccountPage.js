@@ -25,10 +25,17 @@ class AccountPage extends Component {
                   <div className= "accountPage-calCount">
                     {meal.kcal}
                   </div>
+
                   <button className= "accountPage-deleteBtn" onClick={() => this.props.onDelete(index)}>
                       Remove
                   </button>
                   </div>
+
+                  {/* <button onClick={() => this.props.onDelete(index)}>
+                      Remove
+                  </button> */}
+                </div>
+
               ))
             }
         </div>

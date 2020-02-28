@@ -7,6 +7,7 @@ class Callback extends Component {
     await auth0Client.handleAuthentication();
     this.props.history.replace('/');
     this.props.onShowAccount();
+    this.props.getUser();
   }
 
   render() {

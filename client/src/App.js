@@ -194,7 +194,6 @@ class App extends Component {
               (<AccountPage {...props} 
                 getUser={this.getUser.bind(this)} //see if this will work without binding
                 userMeals={this.state.userMeals}
-                // onDelete = {this.onDelete.bind(this)}
                 />)
               }/>
             <Route exact path='/login/' component={Login} />
@@ -202,6 +201,7 @@ class App extends Component {
             <Route exact path='/callback/'  render={props => 
               (<Callback {...props}
                 onShowAccount={this.showAccount}
+                getUser={this.getUser}
               />)
             }/>
           </Switch>

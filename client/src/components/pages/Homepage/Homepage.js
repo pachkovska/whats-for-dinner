@@ -27,8 +27,9 @@ class Homepage extends Component {
             <div className="">
                 <p>Total:</p>
                 <span>
-                {this.props.calorieCount 
-                && this.props.calorieCount.reduce((totalCalories, element) => totalCalories + Number(element.kcal), 0)
+                {
+                    this.props.calorieCount &&
+                    this.props.calorieCount.reduce((totalCalories, element) => totalCalories + Number(element.kcal), 0)
                 }
                 </span> 
             </div>

@@ -31,11 +31,6 @@ class AccountPage extends Component {
                   </button>
                   </div>
 
-                  {/* <button onClick={() => this.props.onDelete(index)}>
-                      Remove
-                  </button> */}
-                </div>
-
               ))
             }
         </div>

@@ -154,13 +154,15 @@ class App extends Component {
     })
   }
 
-  // onDelete(index){
-  //   let userRecipes = this.state.userRecipes.slice();
-  //   userRecipes.splice(index, 1);
-  //   this.setState({
-  //     userRecipes : userRecipes,
-  //   });
-  // }
+  
+  onDelete(index){
+    let recepies = this.state.userMeals.slice();
+    recepies.splice(index, 1);
+    this.setState({
+      userMeals : recepies,
+    });
+   console.log(index);
+  }
   
   render() {
     
@@ -194,7 +196,7 @@ class App extends Component {
               (<AccountPage {...props} 
                 getUser={this.getUser.bind(this)} //see if this will work without binding
                 userMeals={this.state.userMeals}
-                // onDelete = {this.onDelete.bind(this)}
+                onDelete = {this.onDelete.bind(this)}
                 />)
               }/>
             <Route exact path='/login/' component={Login} />

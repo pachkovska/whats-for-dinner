@@ -12,7 +12,16 @@ import './App.css';
 import Homepage from './components/pages/Homepage/Homepage.js';
 import AccountPage from './components/pages/AccountPage/AccountPage.js';
 
-
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
 
 class App extends Component {
 
@@ -199,18 +208,18 @@ class App extends Component {
         </div>
         <div>
           { this.state.showAccount &&
-            <button onClick={this.handleOpenModal}>Save current meal</button>
+            <button className="MainColor" onClick={this.handleOpenModal}>Save current meal</button>
           }
             <ReactModal 
                 isOpen={this.state.showModal}
-                contentLabel="Please enter name for your meal/recipe">  
+                style={customStyles}>  
                 <p>Please enter name for your meal/recipe</p>              
                   <input
                   placeholder="Meal name"
                   value={this.state.saved}
                   onChange={this.onMealNameChange}
                 />
-                <button onClick={this.handleCloseModal}>Save</button>  
+                <button className="MainColor" onClick={this.handleCloseModal}>Save</button>  
             </ReactModal>
         </div>
       </div>

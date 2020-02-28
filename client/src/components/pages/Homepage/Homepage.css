@@ -1,13 +1,9 @@
 
-body{
-    background-color: chartreuse;
-}
 /* h3{
     text-align: start;
 } */
  
-.Homepage {
-    background-color: cornflowerblue;
+/* .Homepage {
     min-height: 700px;
     width: 900px;
     margin: 40px auto;
@@ -23,7 +19,6 @@ body{
     height: 30px;
     margin: 10px;
     padding: 0 20px;
-    color: green
 
 }
 .add-more-search-form {
@@ -34,9 +29,6 @@ body{
     cursor: pointer;
 }
 
-.search-form input::placeholder {
-    color: green;
-}
 .search-form input::focus{
     outline: none;
 }
@@ -56,4 +48,4 @@ body{
     cursor: pointer;
     font-weight: bolder;
 
-}
+} */

@@ -112,7 +112,7 @@ class App extends Component {
     const formData = {
       user_id: this.state.loggedinUser,
       meal: meal,
-      kcal: 208,
+      kcal: this.state.calorieCount.reduce((totalCalories, element) => totalCalories + Number(element.kcal), 0)
     }
     console.log(formData)
     console.log('About to send the data to mongo')
@@ -128,6 +128,9 @@ class App extends Component {
           // Call method to refresh data
           this.fetchMeals(formData.user_id);
         });
+        this.setState({
+          calorieCount: [],
+        })
       }
 
   handleOpenModal = () => {
@@ -154,11 +157,21 @@ class App extends Component {
     })
   }
 
-  // onDelete(index){
-  //   let userRecipes = this.state.userRecipes.slice();
-  //   userRecipes.splice(index, 1);
-  //   this.setState({
-  //     userRecipes : userRecipes,
+  // onDelete = (index) => {
+  //   let documentId = this.state.userMeals[index]._id
+  //   // userRecipes.splice(index, 1);
+  //   // this.setState({
+  //   //   userMeals : userRecipes,
+  //   // }, () => this.fetchMeals(this.state.loggedinUser));
+  //   fetch('/api/mongodb/usermeals/?_id=' + documentId, {
+  //     method: 'DELETE',
+  //   })
+  //   .then(response => response.json())
+  //   .then(data => {
+  //     console.log('Got this back', data);
+
+  //     // Call method to refresh data
+      
   //   });
   // }
   
@@ -194,7 +207,7 @@ class App extends Component {
               (<AccountPage {...props} 
                 getUser={this.getUser.bind(this)} //see if this will work without binding
                 userMeals={this.state.userMeals}
-                // onDelete = {this.onDelete.bind(this)}
+                // onDelete={this.onDelete}
                 />)
               }/>
             <Route exact path='/login/' component={Login} />
@@ -202,6 +215,7 @@ class App extends Component {
             <Route exact path='/callback/'  render={props => 
               (<Callback {...props}
                 onShowAccount={this.showAccount}
+                getUser={this.getUser}
               />)
             }/>
           </Switch>

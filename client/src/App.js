@@ -128,6 +128,9 @@ class App extends Component {
           // Call method to refresh data
           this.fetchMeals(formData.user_id);
         });
+        this.setState({
+          calorieCount: [],
+        })
       }
 
   handleOpenModal = () => {

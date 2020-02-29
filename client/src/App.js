@@ -91,7 +91,8 @@ class App extends Component {
 
   getCalorieCount = (lastSavedIngridient) => {
     console.log('#4 get calorie count')
-    let calorieElement = this.state.nutrientData.filter(el => el.id === lastSavedIngridient)[0].foodNutrients.filter(el => el.nutrient.unitName === 'kcal')[0].amount;
+    let calorieElement = this.state.nutrientData.filter(el => el.id === 
+      lastSavedIngridient)[0].foodNutrients.filter(el => el.nutrient.unitName === 'kcal')[0].amount;
     console.log(calorieElement)
     this.setState({
       calorieCount: [...this.state.calorieCount, { name: this.state.ingridients[this.state.ingridients.length - 1].name, kcal:  calorieElement}]

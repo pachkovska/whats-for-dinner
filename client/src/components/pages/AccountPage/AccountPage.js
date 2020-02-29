@@ -11,7 +11,8 @@ class AccountPage extends Component {
     return (
       <div className="accountPageContainer">
         <div className= "accountPage-body">
-          <h1>My Account</h1>
+          <h1>My Recipes</h1>
+          <p>View and remove your currently saved recipes below.</p>
           <div className= "accountPage-recipeSection">
             <div className= "accountPage-recipeSectionTitle">
             <p>Saved meals</p><p>Estimated Calorie Count</p>

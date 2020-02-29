@@ -255,6 +255,9 @@ class App extends Component {
             </ReactModal>
         {/* </div> */}
         </div>
+          <footer className="py-3 custom-bg">
+            <p>Copyright &copy; CalorieCache 2020</p>
+         </footer> 
       </div>
     );
   }

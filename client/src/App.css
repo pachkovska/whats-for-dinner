@@ -1,5 +1,6 @@
 :root {
     --main-color: #FF6347;
+    /* --main-color: #ffa395; */
     --font-grey: #66757F;
     --logo-color: #343232;
 }
@@ -15,7 +16,7 @@
     min-height: 100vh;
     display: grid;
     grid-template-columns: 20% 1fr 20%;
-    grid-template-rows: 50px 1fr;
+    grid-template-rows: 50px 1fr 20px;
     /* grid-row-gap: 10px;
     grid-column-gap: 10px; */
     /* align-items: stretch; */
@@ -109,5 +110,21 @@ input {
    margin-left: 0; 
    margin-right: 0;
 }
+
+footer {
+    font-size: 10px;
+    height: 20px;
+    background: var(--main-color);
+    position: fixed;
+    bottom: 0px;
+    color: #ffffff;
+    grid-column: 1 /span 3;
+    grid-row: 3;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+  }
 
 

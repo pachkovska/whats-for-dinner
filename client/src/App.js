@@ -171,32 +171,31 @@ class App extends Component {
     })
   }
   
-  onDelete(index){
-    let recepies = this.state.userMeals.slice();
-    recepies.splice(index, 1);
-    this.setState({
-      userMeals : recepies,
-    });
-   console.log(index);
-  }
-
-  // onDelete = (index) => {
-  //   let documentId = this.state.userMeals[index]._id
-  //   // userRecipes.splice(index, 1);
-  //   // this.setState({
-  //   //   userMeals : userRecipes,
-  //   // }, () => this.fetchMeals(this.state.loggedinUser));
-  //   fetch('/api/mongodb/usermeals/?_id=' + documentId, {
-  //     method: 'DELETE',
-  //   })
-  //   .then(response => response.json())
-  //   .then(data => {
-  //     console.log('Got this back', data);
-
-  //     // Call method to refresh data
-      
+  // onDelete(index){
+  //   let recepies = this.state.userMeals.slice();
+  //   recepies.splice(index, 1);
+  //   this.setState({
+  //     userMeals : recepies,
   //   });
+  //  console.log(index);
   // }
+
+  onDelete = (index) => {
+    let documentId = this.state.userMeals[index]._id
+    let loggedinUser = this.state.loggedinUser;
+    console.log('users stuff to be fetched', loggedinUser)
+    console.log('Document ID to be deleted', documentId)
+    fetch('/api/mongodb/usermeals/?_id=' + documentId, {
+      method: 'DELETE',
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Deleting items from DB', data);
+
+      this.fetchMeals(loggedinUser);
+      
+    });
+  }
   
   render() {
     
@@ -239,7 +238,6 @@ class App extends Component {
                 userMeals={this.state.userMeals}
 
                 onDelete = {this.onDelete.bind(this)}
-
                 // onDelete={this.onDelete}
 
                 />)

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import chef from '../../../images/chef-1816252_1920.jpg';
 import './AccountPage.css';
  
 class AccountPage extends Component {

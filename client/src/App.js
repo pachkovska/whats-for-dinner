@@ -126,7 +126,8 @@ class App extends Component {
     const formData = {
       user_id: this.state.loggedinUser,
       meal: meal,
-      kcal: this.state.calorieCount.reduce((totalCalories, element) => totalCalories + Number(element.kcal), 0)
+      kcal: this.state.calorieCount.reduce((totalCalories, element) => totalCalories + Number(element.kcal), 0),
+      ingridients: this.state.calorieCount
     }
     console.log(formData)
     console.log('About to send the data to mongo')
@@ -253,11 +254,11 @@ class App extends Component {
               />)
             }/>
           </Switch>  
-            <ReactModal className="SaveModal"
+            <ReactModal
                 isOpen={this.state.showModal}
                 style={customStyles}>  
                 <p>Please enter name for your meal/recipe</p>              
-                  <input
+                  <input style={{marginRight: '10px'}}
                   placeholder="Meal name"
                   value={this.state.saved}
                   onChange={this.onMealNameChange}

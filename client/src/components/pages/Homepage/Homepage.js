@@ -19,12 +19,13 @@ class Homepage extends Component {
                         this.props.calorieCount.map(singleIngridient => (
                             <div className="IngridientList-single">
                                 <p className="IngridientList-single-name">{singleIngridient.name}</p>
+                                <p className="IngridientList-single-amount">{singleIngridient.amount}</p>
                                 <p className="IngridientList-single-calorie">{singleIngridient.kcal}</p>
                             </div>
                         ))
                     }
                     <div className="Ingridient-total" style={{fontWeight: 'bold'}}>
-                        <p>Total:</p>
+                        <p>Total Calories:</p>
                         <span>
                         {
                             this.props.calorieCount &&
@@ -38,7 +39,14 @@ class Homepage extends Component {
                             placeholder="Ingridient"
                             value={this.props.currentIngridient}
                             onChange={this.props.onIngridientChange}
-                        /><button className="IngridientAdd-btn" onClick={this.props.getFoodList}>Add</button> 
+                        />
+                        <input
+                            className="AmountInput"
+                            placeholder="Amount in OZ"
+                            value={this.props.currentIngridientAmount}
+                            onChange={this.props.onAmountChange}
+                        />
+                        <button className="IngridientAdd-btn" onClick={this.props.getFoodList}>Add</button> 
                     </div>
                     { this.props.showAccount &&
                         <button className="SaveMeal-btn" onClick={this.props.handleOpenModal}>Save current meal</button>

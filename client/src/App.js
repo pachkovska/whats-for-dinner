@@ -28,6 +28,7 @@ class App extends Component {
 
   state = {
     currentIngridient: '',
+    currentIngridientAmount: '',
     ingridients: [],
     nutrientData: [],
     loggedinUser: '',
@@ -53,12 +54,21 @@ class App extends Component {
     });
   }
 
+  onAmountChange = (ev) => {
+    let value = ev.target.value;
+    this.setState({
+      currentIngridientAmount: value,
+    });
+  }
+
   getFoodList = () => {
     console.log('#1 get food list')
     const ingridient = this.state.currentIngridient;
+    const amount = this.state.currentIngridientAmount;
 
     this.setState({
       currentIngridient: '',
+      currentIngridientAmount: '',
     })
 
     fetch(`https://api.nal.usda.gov/fdc/v1/search?api_key=o5SMCYbasYSA5j3KyCNfq2DxrcMJZiQ1KHmhnnYH&generalSearchInput=${this.state.currentIngridient}`)
@@ -67,7 +77,7 @@ class App extends Component {
       console.log(data);
         const id = data.foods[0].fdcId;
         this.setState({
-          ingridients: [...this.state.ingridients, {id: id, name: ingridient}], 
+          ingridients: [...this.state.ingridients, {id: id, name: ingridient, calorieAmount: amount}], 
         }, () => {
           this.foodSearch(id);
         })
@@ -91,10 +101,13 @@ class App extends Component {
 
   getCalorieCount = (lastSavedIngridient) => {
     console.log('#4 get calorie count')
-    let calorieElement = this.state.nutrientData.filter(el => el.id === lastSavedIngridient)[0].foodNutrients.filter(el => el.nutrient.unitName === 'kcal')[0].amount;
-    console.log(calorieElement)
+    
+    let standardCalorieAmount = this.state.nutrientData.filter(el => el.id === lastSavedIngridient)[0].foodNutrients.filter(el => el.nutrient.unitName === 'kcal')[0].amount;
+    let requestedCalorieAmount = Math.round(this.state.ingridients.filter(el => el.id === lastSavedIngridient)[0].calorieAmount*0.2835*standardCalorieAmount);
+    let requestedOz = this.state.ingridients.filter(el => el.id === lastSavedIngridient)[0].calorieAmount;
+    console.log("Last saved ingridient amount in grams", this.state.ingridients.filter(el => el.id === lastSavedIngridient)[0].calorieAmount);
     this.setState({
-      calorieCount: [...this.state.calorieCount, { name: this.state.ingridients[this.state.ingridients.length - 1].name, kcal:  calorieElement}]
+      calorieCount: [...this.state.calorieCount, { name: this.state.ingridients[this.state.ingridients.length - 1].name, kcal:  requestedCalorieAmount, amount: requestedOz}]
     })
   }
 
@@ -157,8 +170,6 @@ class App extends Component {
       showAccount: true,
     })
   }
-
-
   
   onDelete(index){
     let recepies = this.state.userMeals.slice();
@@ -213,11 +224,13 @@ class App extends Component {
             <Route exact path='/' render={props => 
               (<Homepage {...props} 
                 currentIngridient={this.state.currentIngridient}
+                currentIngridientAmount={this.state.currentIngridientAmount}
                 onIngridientChange={this.onIngridientChange}
+                onAmountChange={this.onAmountChange}
                 getFoodList={this.getFoodList}
                 calorieCount={this.state.calorieCount}
                 showAccount={this.state.showAccount}
-                handleOpenModal={this.handleCloseModal}
+                handleOpenModal={this.handleOpenModal}
               />)
             } />
               <Route exact path='/account/' render={props => 
@@ -240,7 +253,7 @@ class App extends Component {
               />)
             }/>
           </Switch>  
-            <ReactModal 
+            <ReactModal className="SaveModal"
                 isOpen={this.state.showModal}
                 style={customStyles}>  
                 <p>Please enter name for your meal/recipe</p>              

@@ -7,6 +7,7 @@ import ReactModal from 'react-modal';
 import logo from './images/calorize-logo.png';
 
 import './App.css';
+// import './components/pages/Homepage/Homepage.css';
 
 
 import Homepage from './components/pages/Homepage/Homepage.js';
@@ -185,28 +186,30 @@ class App extends Component {
       
   //   });
   // }
- master
   
   render() {
     
     return (
       <div className="App">
          <nav className="App-navigation">
-           <img src={logo} />
-          <Link to="/"><h1 className="App-title">CalorieCache</h1></Link>
-         {
-            this.state.showAccount 
-            ? <Link to="/account/">My Account</Link>
-            : <Link to='/login/' component={Login}>Login or Signup</Link>  
-         }
-         {
-           this.state.showAccount &&  
-           <Link onClick={auth0Client.signOut} to='/logout/' component={Homepage}>Sign Out</Link>
-         }
+           <div className="NavBar-left">
+            <img className="LogoImage" src={logo} />
+            <Link to="/"><p className="App-title">CalorieCache</p></Link>
+          </div>
+          <div className="NavBar-right">
+          {
+              this.state.showAccount 
+              ? <Link className="NavBar-item" to="/account/">My Account</Link>
+              : <Link className="NavBar-item" to='/login/' component={Login}>Login or Signup</Link>  
+          }
+          {
+            this.state.showAccount &&  
+            <Link className="NavBar-item" onClick={auth0Client.signOut} to='/logout/' component={Homepage}>Sign Out</Link>
+          }
+         </div>
         </nav>
-
         <div className="App-mainContent">
-          <Switch>
+        <Switch>
             <Route exact path='/' render={props => 
               (<Homepage {...props} 
                 currentIngridient={this.state.currentIngridient}
@@ -234,11 +237,10 @@ class App extends Component {
                 getUser={this.getUser}
               />)
             }/>
-          </Switch>
-        </div>
-        <div>
+          </Switch>  
+        {/* <div> */}
           { this.state.showAccount &&
-            <button className="MainColor" onClick={this.handleOpenModal}>Save current meal</button>
+            <button className="MainColor SaveMeal-btn" onClick={this.handleOpenModal}>Save current meal</button>
           }
             <ReactModal 
                 isOpen={this.state.showModal}
@@ -251,6 +253,7 @@ class App extends Component {
                 />
                 <button className="MainColor" onClick={this.handleCloseModal}>Save</button>  
             </ReactModal>
+        {/* </div> */}
         </div>
       </div>
     );

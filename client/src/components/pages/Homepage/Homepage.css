@@ -1,52 +1,44 @@
-
-h3{
-    text-align: start;
-} 
- 
-.Homepage {
-    min-height: 700px;
-    width: 900px;
-    margin: 40px auto;
-    display:grid;
-    grid-template-columns: 60% 40%;
-   
+.Homepage-slogan {
+    font-size: 24px;
 }
 
- .search-form input {
-    border: o;
-    border-radius: 10px;
-    width: 200px;
-    height: 30px;
-    margin: 10px;
-    padding: 0 20px;
-
+.IngridientList-display {
+    display: flex;
+    flex-direction: column;
 }
 
-.add-more-search-form {
-    border: 1;
-    margin: 30px;
-    height: 30px;
-    padding: 0 30px;
-    cursor: pointer;
+.IngridientList-single {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    /* justify-content: space-between; */
 }
 
-.search-form input::focus{
-    outline: none;
+.IngridientList-single-name {
+    justify-self: start;
+    grid-column: 1;
+    grid-row: 2;
 }
-.search-form button {
-    height: 30px;
-    width: 50px;
-    border-radius: 5px;
-    background-color: green;
-    cursor: pointer;
-    font-weight: bolder;
-}
-.save{
-    height: 30px;
-    width: 90px;
-    border-radius: 5px;
-    background-color: green;
-    cursor: pointer;
-    font-weight: bolder;
 
-} 
+.IngridientList-single-calorie {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: end;
+}
+
+.Ingridient-total {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+}
+
+.Ingridient-total > p {
+    grid-column: 1;
+    justify-self: start;
+}
+
+.Ingridient-total > span {
+    grid-column: 2;
+    justify-self: end;
+    align-self: center;
+}

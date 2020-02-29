@@ -1,7 +1,8 @@
 :root {
     --main-color: #FF6347;
+    --font-grey: #66757F;
+    --logo-color: #343232;
 }
-
 .App {
     
     /* background: linear-gradient(to top, #ff00cc, #333399); */
@@ -9,55 +10,67 @@
     /* background: url('https://cdn.shopify.com/s/files/1/1060/9112/products/96_1024x1024.png?v=1526760250') fixed; */
     /* background: url('https://uhs.berkeley.edu/sites/default/files/styles/openberkeley_brand_widgets_rectangle/public/sos-nutrition-whatseatingyou.jpg?itok=uqiZ3lPh'); */
    
-    background: honeydew;
-    background-size: auto;
+    /* background: honeydew; */
+
     min-height: 100vh;
     display: grid;
-    grid-template-columns: 10% 1fr 10%;
-    grid-template-rows: 100px auto;
-    grid-row-gap: 10px;
-    grid-column-gap: 10px;
-    align-items: stretch;
+    grid-template-columns: 20% 1fr 20%;
+    grid-template-rows: 50px 1fr;
+    /* grid-row-gap: 10px;
+    grid-column-gap: 10px; */
+    /* align-items: stretch; */
+    font-family: 'Roboto', sans-serif;
+    color: var(--logo-color);
 }
 
 .App-navigation {
-    width: 100%;
-    padding: 10px;
+    padding-left: 1%;
     background-color: var(--main-color);
-    
-}
-
-.App-sidebar {
-    background: rgba(255, 255, 255, 0.9);
-    display: relative;
-    padding: 10px;
-}
-
-.App-sidebar img {
-    max-width: 100%;
-}
-
-.App-navigation h1 {
-    font-size: 36pt;
-}
-
-.Article-title {
-    font-size: 2em;
-}
-
-.App-navigation {
     grid-column: 1 / span 3;
-    display: flex;
-    justify-content: space-between;
+    grid-row: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    /* justify-content: space-between; */
     align-items: center;
+    justify-items: start;
     cursor: pointer;
 }
 
+.NavBar-left {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+}
+
+.NavBar-right {
+    grid-column: 3;
+    grid-row: 1;
+    display: flex;
+    justify-content: space-around;
+}
+
+.LogoImage {
+    height: 48px;
+    /* margin-top: -3%; */
+    /* align-items: center; */
+}
+
+.App-title {
+    /* grid-column: 1; */
+    font-size: 24px;
+    font-style: oblique;
+    display: inline;
+}
+
 .App-navigation a {
-    font-size: 14pt;
+    /* font-size: 14pt; */
     text-decoration: none;
     color: white;
-    font-weight: bold;
+    /* font-weight: bold; */
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.5) inset;
 }
 
@@ -68,10 +81,33 @@
 
 .App-mainContent {
     grid-column: 2;
+    grid-row: 2;
+    justify-self: center;
+}
+
+.NavBar-item {
+    margin: 0 10px 0 10px;
 }
 
 button {
     background-color: var(--main-color);
+    color: #ffffff;
+    border-radius: 3px;
+    min-width: 50px;
+    font-weight: lighter;
+    margin: 5px;
+}
+
+input {
+    font-family: "Roboto", sans-serif;
+    /* border-radius: 1px; */
+}
+
+.SaveMeal-btn {
+   width: 100%;
+   height: 22px;
+   margin-left: 0; 
+   margin-right: 0;
 }
 
 

@@ -13,7 +13,7 @@ class Homepage extends Component {
                 <p className="Homepage-slogan">We help our users be calorie-conscious</p>
                 <p className="Homepage-title">Type in the name of an ingredient below and add it to your recipe.</p>
                 <div className="IngridientList--display">
-                    <div style={{marginBottom: '5px', fontWeight: 'bold', fontSize: '16px'}}>Ingridients:</div>
+                    <div style={{marginBottom: '5px', fontWeight: 'bold', fontSize: '16px'}}>Ingredients:</div>
                     {/* <div>Calories per 100 grams:</div> */}
                     { this.props.calorieCount &&
                         this.props.calorieCount.map(singleIngridient => (

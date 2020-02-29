@@ -128,7 +128,6 @@ class App extends Component {
       kcal: this.state.calorieCount.reduce((totalCalories, element) => totalCalories + Number(element.kcal), 0),
       ingridients: this.state.calorieCount
     }
-    console.log(formData)
     console.log('About to send the data to mongo')
       fetch('/api/mongodb/usermeals/', {
           method: 'POST',

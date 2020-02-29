@@ -80,7 +80,7 @@ class Auth {
     this.profile = null;
     this.expiresAt = null;
     this.auth0.logout({
-        returnTo: 'http://localhost:3000',
+        returnTo: 'https://calorie-cache.herokuapp.com',
         clientID: 'gTDjCRiSMtZXe8z9TkZDdaP7z4K1HjGH',
     });
   }

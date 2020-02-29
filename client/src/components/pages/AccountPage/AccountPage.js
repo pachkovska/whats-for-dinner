@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './AccountPage.css';
  
 class AccountPage extends Component {
@@ -34,9 +35,13 @@ class AccountPage extends Component {
 
               ))
             }
+          </div>
         </div>
-        </div>
-        </div>
+        {/* <button className="accountPageAddMore-btn" onClick={() => this.props.addMoreRecipes}>
+            Add more recipes
+        </button> */}
+        <Link className="accountPageAddMore-btn" to="/"><p className="accountPageAddMore-btn--text">Add more recipes</p></Link>
+    </div>
         
     );
   }

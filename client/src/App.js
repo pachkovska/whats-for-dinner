@@ -101,7 +101,6 @@ class App extends Component {
 
   getCalorieCount = (lastSavedIngridient) => {
     console.log('#4 get calorie count')
-    
     let standardCalorieAmount = this.state.nutrientData.filter(el => el.id === lastSavedIngridient)[0].foodNutrients.filter(el => el.nutrient.unitName === 'kcal')[0].amount;
     let requestedCalorieAmount = Math.round(this.state.ingridients.filter(el => el.id === lastSavedIngridient)[0].calorieAmount*0.2835*standardCalorieAmount);
     let requestedOz = this.state.ingridients.filter(el => el.id === lastSavedIngridient)[0].calorieAmount;

@@ -11,6 +11,10 @@
     font-size: 34px;
 }
 
+.Homepage-copy {
+    font-size: 14px;
+}
+
 .IngridientList-display {
     display: flex;
     flex-direction: column;
@@ -64,10 +68,8 @@
     float: left;
     left:0;
     width: 100%;
-    height: 25%;
-    /* margin-bottom: 30%; */
-    display: block;
-    margin-top: 10px;
+    height: 150px;
+    margin-top: 15px;
     grid-row: 1;
 }
 

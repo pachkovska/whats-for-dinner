@@ -216,6 +216,8 @@ class App extends Component {
                 onIngridientChange={this.onIngridientChange}
                 getFoodList={this.getFoodList}
                 calorieCount={this.state.calorieCount}
+                showAccount={this.state.showAccount}
+                handleOpenModal={this.handleCloseModal}
               />)
             } />
               <Route exact path='/account/' render={props => 
@@ -238,10 +240,6 @@ class App extends Component {
               />)
             }/>
           </Switch>  
-        {/* <div> */}
-          { this.state.showAccount &&
-            <button className="MainColor SaveMeal-btn" onClick={this.handleOpenModal}>Save current meal</button>
-          }
             <ReactModal 
                 isOpen={this.state.showModal}
                 style={customStyles}>  
@@ -253,9 +251,8 @@ class App extends Component {
                 />
                 <button className="MainColor" onClick={this.handleCloseModal}>Save</button>  
             </ReactModal>
-        {/* </div> */}
         </div>
-          <footer className="py-3 custom-bg">
+          <footer>
             <p>Copyright &copy; CalorieCache 2020</p>
          </footer> 
       </div>

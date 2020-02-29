@@ -7,7 +7,7 @@ class Auth {
       domain: 'dev-sb1wdmd7.auth0.com',
       audience: 'https://dev-sb1wdmd7.auth0.com/userinfo',
       clientID: 'gTDjCRiSMtZXe8z9TkZDdaP7z4K1HjGH',
-      redirectUri: 'http://localhost:3000/callback',
+      redirectUri: 'https://calorie-cache.herokuapp.com/callback',
       responseType: 'token id_token',
       scope: 'openid profile email'
     });
